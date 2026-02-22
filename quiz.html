@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSMO — Your Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #f0f0f0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+.logo { font-size: 12px; letter-spacing: 0.3em; color: #c9a84c; margin-bottom: 48px; text-transform: uppercase; }
+.progress-bar { width: 100%; max-width: 560px; height: 4px; background: #1e1e1e; border-radius: 4px; margin-bottom: 48px; }
+.progress-fill { height: 100%; background: #c9a84c; border-radius: 4px; transition: width 0.4s ease; }
+.question-box { max-width: 560px; width: 100%; text-align: center; }
+.step-label { font-size: 12px; color: #555; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+.question-box h2 { font-size: clamp(22px, 4vw, 34px); font-weight: 800; line-height: 1.25; margin-bottom: 40px; }
+.question-box h2 span { color: #c9a84c; }
+.options { display: flex; flex-direction: column; gap: 14px; }
+.option-btn {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 10px;
+  padding: 18px 24px;
+  color: #e0e0e0;
+  font-size: 15px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.4;
+}
+.option-btn:hover { border-color: #c9a84c; background: #161610; }
+.option-btn.selected { border-color: #c9a84c; background: #1a1a0a; color: #c9a84c; font-weight: 600; }
+.nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; max-width: 560px; width: 100%; }
+.back-btn { background: none; border: none; color: #555; font-size: 14px; cursor: pointer; font-family: inherit; }
+.back-btn:hover { color: #999; }
+.next-btn { background: linear-gradient(135deg, #c9a84c, #e8c96d); color: #000; font-size: 16px; font-weight: 800; padding: 14px 36px; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; opacity: 0.4; pointer-events: none; }
+.next-btn.active { opacity: 1; pointer-events: all; }
+.next-btn.active:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.4); }
+</style>
+</head>
+<body>
+
+<div class="logo">C O S M O</div>
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:20%"></div></div>
+
+<div class="question-box" id="qbox">
+  <div class="step-label" id="step-label">Question 1 of 5</div>
+  <h2 id="question-text"></h2>
+  <div class="options" id="options"></div>
+</div>
+
+<div class="nav-row">
+  <button class="back-btn" id="back-btn" onclick="prevQuestion()">&#8592; Back</button>
+  <button class="next-btn" id="next-btn" onclick="nextQuestion()">Continue &rarr;</button>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const birthday = params.get('birthday') || '';
+const mbti = params.get('mbti') || '';
+
+const questions = [
+  {
+    text: 'When something goes wrong in your life, your first instinct is to...',
+    options: [
+      'Analyze what happened and build a better system',
+      'Feel it fully, then talk it through with someone',
+      'Push through and fix it immediately',
+      'Step back, get perspective, then act slowly'
+    ]
+  },
+  {
+    text: 'The people closest to you would say your biggest flaw is...',
+    options: [
+      'You disappear when things get hard',
+      'You overthink everything to death',
+      'You say what you think without a filter',
+      'You care too much what people think'
+    ]
+  },
+  {
+    text: 'Your relationship with money is best described as...',
+    options: [
+      'A tool — means to an end, I don\'t think about it much',
+      'A source of anxiety — never feels like enough',
+      'A scoreboard — I track it closely',
+      'Abstract — I know I should care more than I do'
+    ]
+  },
+  {
+    text: 'When you imagine your ideal life in 5 years, the clearest image is...',
+    options: [
+      'A specific achievement or title I\'ve earned',
+      'A feeling — freedom, peace, belonging',
+      'A lifestyle — where I live, how I spend my days',
+      'Honestly, I can\'t picture it clearly yet'
+    ]
+  },
+  {
+    text: 'The version of you that\'s hardest to admit exists is...',
+    options: [
+      'Deeply insecure underneath the confidence',
+      'Selfish and avoidant when stressed',
+      'Desperate for approval I pretend not to need',
+      'Lazy and self-sabotaging when no one is watching'
+    ]
+  }
+];
+
+let current = 0;
+let answers = [];
+
+function render() {
+  const q = questions[current];
+  document.getElementById('step-label').textContent = `Question ${current + 1} of ${questions.length}`;
+  document.getElementById('question-text').innerHTML = q.text;
+  document.getElementById('progress').style.width = `${((current + 1) / questions.length) * 100}%`;
+
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn' + (answers[current] === i ? ' selected' : '');
+    btn.textContent = opt;
+    btn.onclick = () => selectOption(i);
+    opts.appendChild(btn);
+  });
+
+  document.getElementById('back-btn').style.visibility = current === 0 ? 'hidden' : 'visible';
+  updateNext();
+}
+
+function selectOption(i) {
+  answers[current] = i;
+  document.querySelectorAll('.option-btn').forEach((b, idx) => {
+    b.classList.toggle('selected', idx === i);
+  });
+  updateNext();
+}
+
+function updateNext() {
+  const btn = document.getElementById('next-btn');
+  const ready = answers[current] !== undefined;
+  btn.classList.toggle('active', ready);
+  btn.textContent = current === questions.length - 1 ? 'See My Blueprint \u2192' : 'Continue \u2192';
+}
+
+function nextQuestion() {
+  if (answers[current] === undefined) return;
+  if (current < questions.length - 1) {
+    current++;
+    render();
+  } else {
+    const p = new URLSearchParams({ birthday, mbti, answers: JSON.stringify(answers) });
+    window.location.href = 'results.html?' + p.toString();
+  }
+}
+
+function prevQuestion() {
+  if (current > 0) { current--; render(); }
+}
+
+render();
+</script>
+</body>
+</html>
