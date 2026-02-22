@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSMO — One-Time Offer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #f0f0f0; overflow-x: hidden; }
+.topbar { background: #8b0000; color: #fff; text-align: center; padding: 12px; font-size: 14px; font-weight: 700; letter-spacing: 0.03em; }
+.logo { text-align: center; padding: 32px 20px 0; font-size: 12px; letter-spacing: 0.3em; color: #c9a84c; text-transform: uppercase; }
+
+.hero { padding: 60px 20px 40px; text-align: center; background: radial-gradient(ellipse at top, #1a0d0d 0%, #0a0a0a 70%); }
+.oto-label { display: inline-block; background: #8b0000; color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 0.15em; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; }
+.hero h1 { font-size: clamp(28px, 5vw, 54px); font-weight: 900; line-height: 1.15; max-width: 800px; margin: 0 auto 20px; }
+.hero h1 span { color: #c9a84c; }
+.hero .sub { font-size: 18px; color: #888; max-width: 600px; margin: 0 auto 48px; line-height: 1.6; }
+
+.timer-box { display: inline-flex; gap: 16px; background: #111; border: 1px solid #222; border-radius: 12px; padding: 20px 32px; margin-bottom: 48px; }
+.timer-unit { text-align: center; }
+.timer-num { font-size: 36px; font-weight: 900; color: #c9a84c; line-height: 1; display: block; }
+.timer-label { font-size: 10px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; display: block; }
+
+.main-offer { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+.what-you-get { margin-bottom: 48px; }
+.what-you-get h3 { font-size: 22px; font-weight: 800; margin-bottom: 24px; text-align: center; }
+.compat-preview { background: #111; border: 1px solid #222; border-radius: 12px; padding: 32px; margin-bottom: 16px; }
+.compat-preview h4 { color: #c9a84c; font-size: 14px; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+.compat-preview p { color: #999; font-size: 15px; line-height: 1.6; }
+
+.offer-box { background: #111; border: 2px solid #c9a84c; border-radius: 16px; padding: 40px; text-align: center; margin-bottom: 24px; }
+.offer-box .was { font-size: 14px; color: #555; text-decoration: line-through; margin-bottom: 4px; }
+.offer-box .price { font-size: 72px; font-weight: 900; color: #c9a84c; line-height: 1; margin-bottom: 4px; }
+.offer-box .price-sub { font-size: 14px; color: #666; margin-bottom: 28px; }
+.bullets { text-align: left; margin-bottom: 28px; }
+.bullets li { font-size: 14px; color: #ccc; padding: 8px 0; border-bottom: 1px solid #1a1a1a; list-style: none; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
+.bullets li::before { content: '✓'; color: #c9a84c; font-weight: 700; flex-shrink: 0; }
+.buy-btn { width: 100%; background: linear-gradient(135deg, #c9a84c, #e8c96d); color: #000; font-size: 20px; font-weight: 900; padding: 22px; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 12px; transition: transform 0.15s, box-shadow 0.15s; }
+.buy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.4); }
+.guarantee { font-size: 13px; color: #555; margin-top: 16px; line-height: 1.5; }
+.no-thanks { font-size: 13px; color: #333; cursor: pointer; text-decoration: underline; display: block; margin-top: 16px; }
+.no-thanks:hover { color: #666; }
+
+footer { background: #050505; padding: 32px 20px; text-align: center; color: #444; font-size: 12px; margin-top: 80px; }
+footer a { color: #555; text-decoration: none; margin: 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">WAIT — Your Order Is Not Complete. This Offer Disappears When You Leave This Page.</div>
+<div class="logo">C O S M O</div>
+
+<section class="hero">
+  <div class="oto-label">One-Time Offer — Never Shown Again</div>
+  <h1>Now See <span>Who You're Compatible With</span> — And Exactly Why</h1>
+  <p class="sub">You just unlocked your blueprint. Add one person's data and get a brutally honest compatibility analysis — the attraction, the friction, the long-term prognosis.</p>
+
+  <div class="timer-box">
+    <div class="timer-unit"><span class="timer-num" id="tm">10</span><span class="timer-label">Min</span></div>
+    <div class="timer-unit"><span class="timer-num" id="ts">00</span><span class="timer-label">Sec</span></div>
+  </div>
+</section>
+
+<div class="main-offer">
+  <div class="what-you-get">
+    <h3>What You Get: Full Compatibility Report</h3>
+    <div class="compat-preview">
+      <h4>Natural Attraction Analysis</h4>
+      <p>Why you're drawn to each other on a cognitive level — and whether that pull is built on genuine compatibility or a pattern you keep repeating with the wrong people.</p>
+    </div>
+    <div class="compat-preview">
+      <h4>The Core Friction Points</h4>
+      <p>The exact spots where your two blueprints will clash — predictably, repeatedly. Not as a warning. As a manual for navigating them before they blow up the relationship.</p>
+    </div>
+    <div class="compat-preview">
+      <h4>Long-Term Prognosis</h4>
+      <p>Does this pairing get better with time or slowly erode? The cosmic and psychological data tells a clear story — here's how to read it.</p>
+    </div>
+    <div class="compat-preview">
+      <h4>Communication Translation Guide</h4>
+      <p>How they receive love and criticism, what shuts them down, what lights them up. The things they've never been able to explain about themselves — translated for you.</p>
+    </div>
+  </div>
+
+  <div class="offer-box">
+    <div class="was">Regular price: $67</div>
+    <div class="price">$27</div>
+    <div class="price-sub">Added to your order — one click, no new checkout</div>
+    <ul class="bullets">
+      <li>Full compatibility report (12 sections)</li>
+      <li>Attraction &amp; friction breakdown</li>
+      <li>Long-term prognosis score</li>
+      <li>Communication translation guide</li>
+      <li>Shareable couples card</li>
+      <li>Works for romantic, friendship, or professional relationships</li>
+    </ul>
+    <button class="buy-btn" onclick="addCompatibility()">YES — ADD COMPATIBILITY REPORT FOR $27 &rarr;</button>
+    <div class="guarantee">&#128274; Still covered by the 30-day money-back guarantee. Zero risk.</div>
+    <span class="no-thanks" onclick="skipOTO1()">No thanks, I don't want to know my compatibility</span>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 COSMO. All rights reserved.</p><br>
+  <a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Contact</a>
+</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const birthday = params.get('birthday') || '';
+const mbti = params.get('mbti') || '';
+
+// Countdown timer — 10 minutes
+let total = 10 * 60;
+const tm = document.getElementById('tm');
+const ts = document.getElementById('ts');
+const tick = setInterval(() => {
+  total--;
+  if (total <= 0) { clearInterval(tick); skipOTO1(); return; }
+  tm.textContent = String(Math.floor(total / 60)).padStart(2, '0');
+  ts.textContent = String(total % 60).padStart(2, '0');
+}, 1000);
+
+function addCompatibility() {
+  const p = new URLSearchParams({ birthday, mbti, oto1: 'yes' });
+  window.location.href = 'upsell2.html?' + p.toString();
+}
+
+function skipOTO1() {
+  const p = new URLSearchParams({ birthday, mbti, oto1: 'no' });
+  window.location.href = 'upsell2.html?' + p.toString();
+}
+</script>
+</body>
+</html>
