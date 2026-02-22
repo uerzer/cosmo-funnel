@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSMO — Discover Your Psychological Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #f0f0f0; overflow-x: hidden; }
+.topbar { background: #c9a84c; color: #000; text-align: center; padding: 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; }
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; background: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0a 70%); text-align: center; }
+.logo { font-size: 13px; letter-spacing: 0.3em; color: #c9a84c; margin-bottom: 40px; text-transform: uppercase; }
+.hero h1 { font-size: clamp(32px, 6vw, 72px); font-weight: 900; line-height: 1.1; max-width: 900px; margin-bottom: 24px; }
+.hero h1 span { color: #c9a84c; }
+.hero .sub { font-size: clamp(16px, 2.5vw, 22px); color: #aaa; max-width: 600px; line-height: 1.6; margin-bottom: 48px; }
+.form-box { background: #111; border: 1px solid #222; border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; margin-bottom: 32px; }
+.form-box h3 { font-size: 18px; margin-bottom: 24px; color: #c9a84c; text-align: center; }
+.form-box input, .form-box select { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 14px 16px; color: #f0f0f0; font-size: 15px; margin-bottom: 14px; outline: none; font-family: inherit; }
+.form-box input:focus, .form-box select:focus { border-color: #c9a84c; }
+.cta-btn { width: 100%; background: linear-gradient(135deg, #c9a84c, #e8c96d); color: #000; font-size: 18px; font-weight: 800; padding: 18px; border: none; border-radius: 10px; cursor: pointer; letter-spacing: 0.03em; transition: transform 0.15s, box-shadow 0.15s; margin-top: 8px; }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.4); }
+.trust-row { display: flex; gap: 24px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+.trust-item { font-size: 12px; color: #666; display: flex; align-items: center; gap: 6px; }
+.trust-item .dot { width: 6px; height: 6px; background: #c9a84c; border-radius: 50%; display: inline-block; }
+.social-proof { padding: 80px 20px; background: #080808; text-align: center; }
+.social-proof h2 { font-size: clamp(22px, 4vw, 40px); font-weight: 800; margin-bottom: 48px; }
+.testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+.testi { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 28px; text-align: left; }
+.testi .stars { color: #c9a84c; font-size: 18px; margin-bottom: 12px; }
+.testi p { font-size: 15px; line-height: 1.6; color: #ccc; margin-bottom: 16px; }
+.testi .name { font-size: 13px; color: #666; font-weight: 600; }
+.what { padding: 80px 20px; background: #0a0a0a; text-align: center; }
+.what h2 { font-size: clamp(24px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; }
+.what .sub2 { color: #888; font-size: 17px; margin-bottom: 56px; }
+.preview-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto 48px; }
+.preview-card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 28px 24px; text-align: left; }
+.preview-card .icon { font-size: 28px; margin-bottom: 14px; }
+.preview-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #c9a84c; }
+.preview-card p { font-size: 14px; color: #888; line-height: 1.5; }
+.vsl { padding: 80px 20px; background: #080808; text-align: center; }
+.vsl h2 { font-size: clamp(22px, 3.5vw, 38px); font-weight: 800; margin-bottom: 32px; max-width: 700px; margin-left: auto; margin-right: auto; }
+.video-placeholder { width: 100%; max-width: 720px; aspect-ratio: 16/9; background: #111; border: 2px solid #222; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 32px; cursor: pointer; }
+.play-btn { width: 72px; height: 72px; background: #c9a84c; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #000; }
+.final-cta { padding: 100px 20px; background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 70%); text-align: center; }
+.final-cta h2 { font-size: clamp(28px, 5vw, 56px); font-weight: 900; margin-bottom: 20px; }
+.final-cta h2 span { color: #c9a84c; }
+.final-cta p { font-size: 18px; color: #888; margin-bottom: 40px; }
+.cta-btn-large { display: inline-block; background: linear-gradient(135deg, #c9a84c, #e8c96d); color: #000; font-size: 22px; font-weight: 900; padding: 22px 56px; border-radius: 12px; text-decoration: none; cursor: pointer; border: none; letter-spacing: 0.02em; transition: transform 0.15s, box-shadow 0.15s; }
+.cta-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,168,76,0.5); }
+footer { background: #050505; padding: 32px 20px; text-align: center; color: #444; font-size: 12px; }
+footer a { color: #666; text-decoration: none; margin: 0 12px; }
+</style>
+</head>
+<body>
+<div class="topbar">*** LIMITED: Free Psychological Blueprint — 847 Generated Today ***</div>
+
+<section class="hero">
+  <div class="logo">C O S M O</div>
+  <h1>The Universe Encoded <span>Your Personality</span> at Birth.<br>We Decoded It.</h1>
+  <p class="sub">Enter your birthday and personality type. Get the brutal, specific truth about how your mind actually works — free in 60 seconds.</p>
+  <div class="form-box">
+    <h3>Generate Your Free Blueprint</h3>
+    <input type="date" id="birthday" max="2005-01-01">
+    <select id="mbti">
+      <option value="" disabled selected>Select Your Personality Type</option>
+      <optgroup label="Analysts"><option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option></optgroup>
+      <optgroup label="Diplomats"><option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option></optgroup>
+      <optgroup label="Sentinels"><option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option></optgroup>
+      <optgroup label="Explorers"><option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option></optgroup>
+    </select>
+    <button class="cta-btn" onclick="startQuiz()">REVEAL MY BLUEPRINT &rarr;</button>
+  </div>
+  <div class="trust-row">
+    <span class="trust-item"><span class="dot"></span> Free, No Credit Card</span>
+    <span class="trust-item"><span class="dot"></span> 60-Second Results</span>
+    <span class="trust-item"><span class="dot"></span> 94,000+ Blueprints Generated</span>
+  </div>
+</section>
+
+<section class="social-proof">
+  <h2>What People Are Saying</h2>
+  <div class="testimonials">
+    <div class="testi">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>"This described my self-sabotage patterns better than 3 years of therapy. I actually cried reading section 4."</p>
+      <div class="name">— Sarah M., INFJ, Scorpio</div>
+    </div>
+    <div class="testi">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>"I've done every personality test. COSMO is the first one that told me something I didn't already know about myself."</p>
+      <div class="name">— Marcus T., ENTP, Gemini Rising</div>
+    </div>
+    <div class="testi">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>"Sent the shareable card to my partner. We haven't stopped talking about it. This is relationship therapy for $9."</p>
+      <div class="name">— Priya K., ENFP, Pisces</div>
+    </div>
+  </div>
+</section>
+
+<section class="what">
+  <h2>Your Blueprint Covers Everything</h2>
+  <p class="sub2">The free version gives you a taste. The full report goes deep.</p>
+  <div class="preview-cards">
+    <div class="preview-card"><div class="icon">&#129504;</div><h4>Core Operating System</h4><p>How your mind actually processes information, decisions, and stress — not how you think it does.</p></div>
+    <div class="preview-card"><div class="icon">&#9889;</div><h4>Your Hidden Superpower</h4><p>The specific ability your combination creates that most people in your life have never named.</p></div>
+    <div class="preview-card"><div class="icon">&#128373;</div><h4>The Blind Spot</h4><p>The one recurring pattern that keeps showing up in your failures, conflicts, and regrets.</p></div>
+    <div class="preview-card"><div class="icon">&#128188;</div><h4>Career Architecture</h4><p>Environments where you thrive, roles that drain you, and what success actually means for your type.</p></div>
+    <div class="preview-card"><div class="icon">&#10084;</div><h4>Relationship Wiring</h4><p>How you love, how you push people away, and what you actually need — not what you think you need.</p></div>
+    <div class="preview-card"><div class="icon">&#127761;</div><h4>Shadow Side</h4><p>The darker traits your cosmic combination carries — and how to stop letting them run the show.</p></div>
+  </div>
+</section>
+
+<section class="vsl">
+  <h2>Why Most Personality Tests Get You Wrong</h2>
+  <div class="video-placeholder">
+    <div class="play-btn">&#9654;</div>
+  </div>
+  <p style="color:#666; font-size:14px; max-width:500px; margin:0 auto;">Watch this 3-minute video to understand why MBTI alone is only half the picture — and what the missing layer reveals.</p>
+</section>
+
+<section class="final-cta">
+  <h2>Ready to See <span>The Real You?</span></h2>
+  <p>Free in 60 seconds. No account. No credit card. Just truth.</p>
+  <button class="cta-btn-large" onclick="startQuiz()">GET MY FREE BLUEPRINT &rarr;</button>
+</section>
+
+<footer>
+  <p>&copy; 2026 COSMO. All rights reserved.</p><br>
+  <a href="#">Privacy Policy</a>
+  <a href="#">Terms of Service</a>
+  <a href="#">Contact</a>
+</footer>
+
+<script>
+function startQuiz() {
+  const birthday = document.getElementById('birthday').value;
+  const mbti = document.getElementById('mbti').value;
+  if (!birthday || !mbti) { alert('Please enter your birthday and select your personality type.'); return; }
+  const params = new URLSearchParams({ birthday, mbti });
+  window.location.href = 'quiz.html?' + params.toString();
+}
+</script>
+</body>
+</html>
