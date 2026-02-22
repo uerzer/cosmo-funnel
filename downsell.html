@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSMO — Wait, One More Thing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #f0f0f0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; }
+.logo { font-size: 12px; letter-spacing: 0.3em; color: #c9a84c; text-transform: uppercase; margin-bottom: 48px; }
+.ds-label { display: inline-block; background: #1a1a1a; color: #c9a84c; border: 1px solid #c9a84c44; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; }
+h1 { font-size: clamp(26px, 5vw, 48px); font-weight: 900; line-height: 1.15; max-width: 700px; margin: 0 auto 20px; }
+h1 span { color: #c9a84c; }
+.sub { font-size: 17px; color: #888; max-width: 520px; margin: 0 auto 48px; line-height: 1.6; }
+
+.card-mockup {
+  background: linear-gradient(135deg, #0d0d1a, #1a1a0d);
+  border: 1px solid #c9a84c55;
+  border-radius: 16px;
+  padding: 36px 32px;
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto 40px;
+  position: relative;
+}
+.card-mockup .card-type { font-size: 11px; letter-spacing: 0.25em; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; }
+.card-mockup .card-quote { font-size: 18px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; }
+.card-mockup .card-footer { font-size: 11px; color: #555; }
+
+.offer-strip { background: #111; border: 2px solid #c9a84c; border-radius: 14px; padding: 32px; max-width: 420px; width: 100%; margin: 0 auto; }
+.offer-strip .was { font-size: 13px; color: #555; text-decoration: line-through; margin-bottom: 4px; }
+.offer-strip .price { font-size: 56px; font-weight: 900; color: #c9a84c; line-height: 1; margin-bottom: 4px; }
+.offer-strip .price-sub { font-size: 13px; color: #666; margin-bottom: 24px; }
+.buy-btn { width: 100%; background: linear-gradient(135deg, #c9a84c, #e8c96d); color: #000; font-size: 17px; font-weight: 900; padding: 18px; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s; margin-bottom: 16px; }
+.buy-btn:hover { transform: translateY(-2px); }
+.includes { font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.7; }
+.no-thanks { font-size: 13px; color: #333; cursor: pointer; text-decoration: underline; }
+.no-thanks:hover { color: #666; }
+</style>
+</head>
+<body>
+
+<div class="logo">C O S M O</div>
+<div class="ds-label">Before You Go</div>
+<h1>At Least Take Your <span>Custom Card</span> With You</h1>
+<p class="sub">Skip the full report — fine. But your shareable blueprint card is ready. It's the thing people screenshot and send to everyone they know. One-time offer.</p>
+
+<div class="card-mockup">
+  <div class="card-type" id="card-type">ENTP + Scorpio</div>
+  <div class="card-quote" id="card-quote">"You burn bridges you haven't built yet. Your superpower is seeing 10 moves ahead. Your blindspot is finishing move 1."</div>
+  <div class="card-footer">COSMO — cosmo.app</div>
+</div>
+
+<div class="offer-strip">
+  <div class="was">Regular price: $17</div>
+  <div class="price">$7</div>
+  <div class="price-sub">Custom card image — download and share forever</div>
+  <div class="includes">Includes: High-res card image &bull; Custom quote for your exact type &bull; Shareable to Instagram, Twitter, TikTok</div>
+  <button class="buy-btn" onclick="getCard()">YES — GET MY CARD FOR $7 &rarr;</button>
+  <span class="no-thanks" onclick="skip()">No thanks, I don't want my card</span>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const birthday = params.get('birthday') || '';
+const mbti = params.get('mbti') || '';
+
+const sunSigns = [
+  {sign:'Capricorn',end:[1,19]},{sign:'Aquarius',end:[2,18]},{sign:'Pisces',end:[3,20]},
+  {sign:'Aries',end:[4,19]},{sign:'Taurus',end:[5,20]},{sign:'Gemini',end:[6,20]},
+  {sign:'Cancer',end:[7,22]},{sign:'Leo',end:[8,22]},{sign:'Virgo',end:[9,22]},
+  {sign:'Libra',end:[10,22]},{sign:'Scorpio',end:[11,21]},{sign:'Sagittarius',end:[12,21]},{sign:'Capricorn',end:[12,31]}
+];
+function getSunSign(d) {
+  const date = new Date(d); const m = date.getMonth()+1; const day = date.getDate();
+  for (const s of sunSigns) { if (m < s.end[0] || (m === s.end[0] && day <= s.end[1])) return s.sign; }
+  return 'Capricorn';
+}
+const sunSign = getSunSign(birthday);
+const cardQuotes = {
+  ENTP:'"You burn bridges you haven\'t built yet. Your superpower is seeing 10 moves ahead. Your blindspot is finishing move 1."',
+  INTJ:'"You\'ve solved the problem in your head. Now stop waiting for the world to catch up."',
+  INFJ:'"You see everyone\'s potential except your own. That\'s the whole thing right there."',
+  ENFP:'"You light up every room. The question is who lights you up when you\'re alone."',
+  ENTJ:'"You build empires. The audit is: what did you sacrifice to build this one?"',
+  INFP:'"The world in your head is magnificent. Someone deserves to see it. Let them."',
+  ENFJ:'"You\'ve given everything to everyone. What would happen if you kept some for yourself?"',
+  ISTJ:'"You are the foundation everyone builds on. Who is your foundation?"',
+  ISFJ:'"You show up for everyone. The real question is: who shows up for you?"',
+  ESTJ:'"You execute flawlessly. The next level is learning what to stop executing."',
+  ESFJ:'"Your love is your superpower. Stop giving it to people who hand it back."',
+  ISTP:'"You fix everything around you. Some things inside you need fixing too."',
+  ISFP:'"You feel at frequencies others can\'t reach. That\'s the gift. Stop hiding it."',
+  ESTP:'"You thrive in fire. The work is learning which fires are worth starting."',
+  ESFP:'"You make life better for everyone around you. Make it better for you first."',
+  INTP:'"You\'ve solved it in your head a hundred times. The gap is the inch between thought and action."'
+};
+document.getElementById('card-type').textContent = `${mbti} + ${sunSign}`;
+document.getElementById('card-quote').textContent = cardQuotes[mbti] || cardQuotes['ENTP'];
+
+function getCard() {
+  const p = new URLSearchParams({ birthday, mbti, ds: 'card' });
+  window.location.href = 'upsell2.html?' + p.toString();
+}
+function skip() {
+  const p = new URLSearchParams({ birthday, mbti, ds: 'skip' });
+  window.location.href = 'upsell2.html?' + p.toString();
+}
+</script>
+</body>
+</html>
